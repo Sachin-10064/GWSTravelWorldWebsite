@@ -1,11 +1,11 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import { TravelApp } from '../components/TravelApp';
 ---
 
-<Layout>
-	<Welcome />
+<Layout 
+	title="GWS World Travel | Curated Luxury Journeys & Expeditions Across India"
+	description="Experience the extraordinary diversity of India with GWS World Travel: the high Himalayas, Thar Desert dunes, Kerala backwaters, royal palaces, and sacred ghats. Handcrafted luxury travel expeditions."
+>
+	<TravelApp client:load />
 </Layout>
