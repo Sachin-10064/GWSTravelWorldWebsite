@@ -7,10 +7,11 @@ interface EnquirySectionProps {
   prefilledState?: string;
 }
 
-export const EnquirySection: React.FC<EnquirySectionProps> = ({ 
-  prefilledPackage, 
-  prefilledState 
+export const EnquirySection: React.FC<EnquirySectionProps> = ({
+  prefilledPackage,
+  prefilledState
 }) => {
+  const SCRIPT_URL = import.meta.env.PUBLIC_SHEET_URL; 
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -31,8 +32,8 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
     if (prefilledPackage) {
       setFormData(prev => ({
         ...prev,
-        description: prev.description 
-          ? prev.description 
+        description: prev.description
+          ? prev.description
           : `Interested in: ${prefilledPackage}`
       }));
     }
@@ -99,8 +100,22 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
 
     try {
       // Simulate API submission to travel concierge CRM
-      await new Promise(resolve => setTimeout(resolve, 1400));
-      
+      // await new Promise(resolve => setTimeout(resolve, 1400));
+
+
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: new URLSearchParams({
+          fullName: formData.fullName,
+          phone: formData.phone,
+          email: formData.email,
+          packageType: formData.packageType,
+          destinationState: formData.destinationState,
+          travelers: String(formData.travelers),
+          description: formData.description,
+        }),
+      });
       const generatedRef = `ATU-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
       setReferenceId(generatedRef);
       setIsSubmitted(true);
@@ -126,7 +141,7 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
   };
 
   return (
-    <section 
+    <section
       id="enquiry"
       className="py-24 sm:py-32 bg-[#173D32] text-white relative overflow-hidden"
     >
@@ -135,7 +150,7 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
       <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-[#D8B878]/10 blur-3xl pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.25em] uppercase text-[#D8B878] mb-3">
@@ -154,7 +169,7 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
 
         {/* Form Container */}
         <div className="bg-[#0F2821] border border-[#D8B878]/30 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
-          
+
           {isSubmitted ? (
             /* Success Confirmation State */
             <div className="text-center py-10 space-y-6 animate-fade-in">
@@ -208,9 +223,9 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
           ) : (
             /* Main Form */
             <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
+
                 {/* Full Name */}
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-[#D8B878] mb-2 flex items-center gap-1.5">
@@ -222,9 +237,8 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                     placeholder="e.g. Maharaja Vikramaditya / Elena Rostova"
-                    className={`w-full px-4 py-3.5 rounded-xl bg-white/5 border ${
-                      errors.fullName ? 'border-red-400 focus:border-red-400' : 'border-white/15 focus:border-[#D8B878]'
-                    } text-white placeholder-white/30 text-sm focus:outline-none transition-colors`}
+                    className={`w-full px-4 py-3.5 rounded-xl bg-white/5 border ${errors.fullName ? 'border-red-400 focus:border-red-500' : 'border-white/15 focus:border-[#D8B878]'
+                      } text-white placeholder-white/30 text-sm focus:outline-none transition-colors`}
                   />
                   {errors.fullName && (
                     <p className="text-red-400 text-xs mt-1.5 flex items-center gap-1">
@@ -245,9 +259,8 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+91 98765 43210 / +1 (555) 019-2834"
-                    className={`w-full px-4 py-3.5 rounded-xl bg-white/5 border ${
-                      errors.phone ? 'border-red-400 focus:border-red-400' : 'border-white/15 focus:border-[#D8B878]'
-                    } text-white placeholder-white/30 text-sm focus:outline-none transition-colors`}
+                    className={`w-full px-4 py-3.5 rounded-xl bg-white/5 border ${errors.phone ? 'border-red-400 focus:border-red-400' : 'border-white/15 focus:border-[#D8B878]'
+                      } text-white placeholder-white/30 text-sm focus:outline-none transition-colors`}
                   />
                   {errors.phone && (
                     <p className="text-red-400 text-xs mt-1.5 flex items-center gap-1">
@@ -268,9 +281,8 @@ export const EnquirySection: React.FC<EnquirySectionProps> = ({
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="concierge@example.com"
-                    className={`w-full px-4 py-3.5 rounded-xl bg-white/5 border ${
-                      errors.email ? 'border-red-400 focus:border-red-400' : 'border-white/15 focus:border-[#D8B878]'
-                    } text-white placeholder-white/30 text-sm focus:outline-none transition-colors`}
+                    className={`w-full px-4 py-3.5 rounded-xl bg-white/5 border ${errors.email ? 'border-red-400 focus:border-red-400' : 'border-white/15 focus:border-[#D8B878]'
+                      } text-white placeholder-white/30 text-sm focus:outline-none transition-colors`}
                   />
                   {errors.email && (
                     <p className="text-red-400 text-xs mt-1.5 flex items-center gap-1">

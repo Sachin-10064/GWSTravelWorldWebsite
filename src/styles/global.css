@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  --color-ocean: #0284C7;
+  --color-ocean-dark: #0369A1;
+}
+
 @layer base {
   :root {
     --color-ivory: #F8F5EF;
@@ -14,6 +19,8 @@
     --color-charcoal-muted: #535B51;
     --color-sage: #DDE5D8;
     --color-sage-light: #EEF3EB;
+    --color-ocean: #0284C7;
+    --color-ocean-dark: #0369A1;
   }
 
   body {

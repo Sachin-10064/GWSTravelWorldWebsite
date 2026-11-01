@@ -136,7 +136,7 @@ export const Hero: React.FC = () => {
         ))}
 
         {/* Cinematic Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0F2821] via-black/40 to-black/60 pointer-events-none" />
+        <div className="absolute inset-0 bg-linear-to-t from-[#0F2821] via-black/40 to-black/60 pointer-events-none" />
         <div className="absolute inset-0 bg-radial-at-c from-transparent via-black/25 to-[#0F2821]/80 pointer-events-none" />
       </div>
 

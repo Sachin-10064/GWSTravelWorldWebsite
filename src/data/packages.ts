@@ -1,3 +1,5 @@
+import type { TripPackage, DayItinerary, ActivityItem } from './tripsData';
+
 export interface PackageCategory {
   id: string;
   title: string;
@@ -255,3 +257,51 @@ export const TRAVEL_PACKAGES: TravelPackage[] = [
     ]
   }
 ];
+
+export function convertTravelPackageToTrip(pkg: TravelPackage): TripPackage {
+  const iconPalette: ActivityItem['icon'][] = ['flight', 'hotel', 'ruins', 'market', 'hiking', 'food', 'spa', 'sunset'];
+
+  const convertedItinerary: DayItinerary[] = (pkg.itinerary || []).map((step, idx) => ({
+    dayNumber: idx + 1,
+    dayTitle: `${step.day} — ${step.title}`,
+    tags: [pkg.category, pkg.region],
+    activities: [
+      {
+        icon: iconPalette[idx % iconPalette.length],
+        title: step.title,
+        description: step.desc
+      }
+    ],
+    images: [
+      {
+        url: pkg.heroImage,
+        alt: `${step.title} | ${pkg.title}`,
+        caption: step.desc
+      }
+    ]
+  }));
+
+  return {
+    id: pkg.id,
+    slug: pkg.id,
+    duration: pkg.duration,
+    nightsCount: parseInt(pkg.duration, 10) || 7,
+    location: pkg.region,
+    title: pkg.title,
+    subtitle: pkg.tagline || pkg.category,
+    description: pkg.description,
+    rating: 4.95,
+    reviewsCount: 96,
+    image: pkg.heroImage,
+    heroImages: [pkg.heroImage],
+    highlights: pkg.inclusions.slice(0, 4),
+    inclusions: pkg.inclusions,
+    exclusions: [
+      "Personal shopping and discretionary gratuities",
+      "Airfare unless explicitly stated in personalized booking",
+      "Optional high-adventure gear hire",
+      "Personal medical insurance coverage"
+    ],
+    itinerary: convertedItinerary
+  };
+}

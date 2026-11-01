@@ -156,7 +156,7 @@ export const InteractiveMapSection: React.FC<InteractiveMapSectionProps> = ({
       className="py-24 sm:py-32 bg-[#F8F5EF] relative overflow-hidden"
     >
       {/* Decorative background accents */}
-      <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-[#173D32]/5 to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-24 bg-linear-to-b from-[#173D32]/5 to-transparent pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full bg-[#D8B878]/15 blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -227,12 +227,12 @@ export const InteractiveMapSection: React.FC<InteractiveMapSectionProps> = ({
             {/* SVG Map Container */}
             <div 
               ref={mapContainerRef}
-              className="relative w-full aspect-[4/4.5] flex items-center justify-center"
+              className="relative w-full aspect-4/4.5 flex items-center justify-center"
             >
               <svg
                 ref={svgRef}
                 viewBox="0 0 615 710"
-                className="w-full h-full max-h-[580px] drop-shadow-md select-none"
+                className="w-full h-full max-h-145 drop-shadow-md select-none"
                 xmlns="http://www.w3.org/2000/svg"
                 onMouseLeave={() => {
                   setHoveredStateCode(null);
@@ -327,7 +327,7 @@ export const InteractiveMapSection: React.FC<InteractiveMapSectionProps> = ({
               {/* Pinned Tooltip when hovering over a state */}
               {hoveredDetailedState && tooltipPos && (
                 <div 
-                  className={`pointer-events-none absolute z-30 bg-[#0F2821]/95 text-white px-5 py-3.5 rounded-2xl shadow-2xl border-2 border-[#D8B878] min-w-[220px] max-w-[320px] backdrop-blur-xl transition-all duration-200 animate-fade-in ${
+                  className={`pointer-events-none absolute z-30 bg-[#0F2821]/95 text-white px-5 py-3.5 rounded-2xl shadow-2xl border-2 border-[#D8B878] min-w-55 max-w-[320px] backdrop-blur-xl transition-all duration-200 animate-fade-in ${
                     tooltipPos.alignClass
                   } ${
                     tooltipPos.isTopHalf ? 'translate-y-4' : '-translate-y-[calc(100%+14px)]'
@@ -357,9 +357,9 @@ export const InteractiveMapSection: React.FC<InteractiveMapSectionProps> = ({
 
                   {/* Pointer Arrow pinned directly to state pin */}
                   {tooltipPos.isTopHalf ? (
-                    <div className={`absolute bottom-full ${tooltipPos.arrowClass} mb-[-1px] border-solid border-b-[#0F2821] border-b-8 border-x-transparent border-x-8 border-t-0`} />
+                    <div className={`absolute bottom-full ${tooltipPos.arrowClass} mb-px border-solid border-b-[#0F2821] border-b-8 border-x-transparent border-x-8 border-t-0`} />
                   ) : (
-                    <div className={`absolute top-full ${tooltipPos.arrowClass} -mt-[1px] border-solid border-t-[#0F2821] border-t-8 border-x-transparent border-x-8 border-b-0`} />
+                    <div className={`absolute top-full ${tooltipPos.arrowClass} -mt-px border-solid border-t-[#0F2821] border-t-8 border-x-transparent border-x-8 border-b-0`} />
                   )}
                 </div>
               )}
@@ -397,7 +397,7 @@ export const InteractiveMapSection: React.FC<InteractiveMapSectionProps> = ({
                 alt={activeStateData.name}
                 className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0F2821] via-black/30 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-[#0F2821] via-black/30 to-transparent" />
 
               {/* State badges */}
               <div className="absolute top-5 left-5 right-5 flex items-center justify-between z-10">
@@ -456,7 +456,7 @@ export const InteractiveMapSection: React.FC<InteractiveMapSectionProps> = ({
               {/* Season & Cultural Specialty */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                 <div className="bg-[#F8F5EF] p-3.5 rounded-xl border border-[#DDE5D8] flex items-center gap-3">
-                  <Calendar className="w-5 h-5 text-[#C66B45] flex-shrink-0" />
+                  <Calendar className="w-5 h-5 text-[#C66B45] shrink-0" />
                   <div>
                     <span className="text-[10px] uppercase font-bold tracking-wider text-[#535B51] block">Best Season</span>
                     <span className="text-xs font-semibold text-[#242923]">{activeStateData.bestSeason}</span>
@@ -464,7 +464,7 @@ export const InteractiveMapSection: React.FC<InteractiveMapSectionProps> = ({
                 </div>
 
                 <div className="bg-[#F8F5EF] p-3.5 rounded-xl border border-[#DDE5D8] flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#173D32] flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-[#173D32] shrink-0" />
                   <div>
                     <span className="text-[10px] uppercase font-bold tracking-wider text-[#535B51] block">Regional Specialty</span>
                     <span className="text-xs font-semibold text-[#242923] line-clamp-1">{activeStateData.specialty}</span>

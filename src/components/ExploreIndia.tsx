@@ -17,11 +17,11 @@ interface ExperienceCardProps {
   onSelect: (exp: Experience) => void;
 }
 
-const ExperienceCard: React.FC<ExperienceCardProps> = ({ 
-  experience, 
-  className = '', 
-  isCompact = false, 
-  onSelect 
+const ExperienceCard: React.FC<ExperienceCardProps> = ({
+  experience,
+  className = '',
+  isCompact = false,
+  onSelect
 }) => {
   return (
     <div
@@ -40,22 +40,20 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
       />
 
       {/* Layered Gradient Overlays for High Legibility */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/15 group-hover:from-black/95 transition-colors duration-300" />
+      <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/45 to-black/15 group-hover:from-black/95 transition-colors duration-300" />
 
       {/* Content Area Pinned at Bottom */}
       <div className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-end z-10">
-        <h3 
-          className={`font-sans font-extrabold text-white tracking-tight leading-tight mb-2 drop-shadow-md group-hover:text-[#F8F5EF] transition-colors ${
-            isCompact ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl lg:text-4xl'
-          }`}
+        <h3
+          className={`font-sans font-extrabold text-white tracking-tight leading-tight mb-2 drop-shadow-md group-hover:text-[#F8F5EF] transition-colors ${isCompact ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl lg:text-4xl'
+            }`}
         >
           {experience.title}
         </h3>
 
-        <p 
-          className={`text-white/85 font-normal leading-relaxed line-clamp-2 max-w-xl mb-4 drop-shadow ${
-            isCompact ? 'text-xs' : 'text-xs sm:text-sm'
-          }`}
+        <p
+          className={`text-white/85 font-normal leading-relaxed line-clamp-2 max-w-xl mb-4 drop-shadow ${isCompact ? 'text-xs' : 'text-xs sm:text-sm'
+            }`}
         >
           {experience.description}
         </p>
@@ -66,7 +64,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
               e.stopPropagation();
               onSelect(experience);
             }}
-            className="px-5 sm:px-6 py-2.5 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] active:scale-95 text-white font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2"
+            className="px-5 sm:px-6 py-2.5 rounded-xl bg-ocean hover:bg-ocean/60 active:scale-95 text-white font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2"
           >
             <span>{experience.buttonText || 'EXPLORE NOW'}</span>
           </button>
@@ -146,7 +144,7 @@ export const ExploreIndia: React.FC<ExploreIndiaProps> = ({ onSelectExperience }
   const expCulture = EXPERIENCES.find(e => e.id === 'culture-fastival-food');
 
   return (
-    <section 
+    <section
       id="explore"
       ref={sectionRef}
       className="py-24 sm:py-32 bg-[#F8F5EF] relative overflow-hidden"
@@ -156,7 +154,7 @@ export const ExploreIndia: React.FC<ExploreIndiaProps> = ({ onSelectExperience }
       <div className="absolute bottom-12 -left-24 w-96 h-96 rounded-full bg-[#D8B878]/15 blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div ref={headerRef} className="max-w-3xl mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.25em] uppercase text-[#C66B45] mb-3">
@@ -182,9 +180,9 @@ export const ExploreIndia: React.FC<ExploreIndiaProps> = ({ onSelectExperience }
             <div className="flex flex-col gap-5 sm:gap-6">
               {/* Card 1: Adventure & Scuba (Large Feature Card) */}
               {expAdventure && (
-                <ExperienceCard 
-                  experience={expAdventure} 
-                  className="h-[380px] sm:h-[440px] lg:h-[470px]"
+                <ExperienceCard
+                  experience={expAdventure}
+                  className="h-95 sm:h-110 lg:h-117.5"
                   onSelect={onSelectExperience}
                 />
               )}
@@ -193,20 +191,20 @@ export const ExploreIndia: React.FC<ExploreIndiaProps> = ({ onSelectExperience }
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                 {/* Card 2: Island / Spiritual Heritage */}
                 {expSpiritual && (
-                  <ExperienceCard 
-                    experience={expSpiritual} 
+                  <ExperienceCard
+                    experience={expSpiritual}
                     isCompact={true}
-                    className="h-[250px] sm:h-[270px]"
+                    className="h-62.5 sm:h-67.5"
                     onSelect={onSelectExperience}
                   />
                 )}
 
                 {/* Card 3: Pristine Beaches */}
                 {expBeaches && (
-                  <ExperienceCard 
-                    experience={expBeaches} 
+                  <ExperienceCard
+                    experience={expBeaches}
                     isCompact={true}
-                    className="h-[250px] sm:h-[270px]"
+                    className="h-62.5 sm:h-67.5"
                     onSelect={onSelectExperience}
                   />
                 )}
@@ -217,18 +215,18 @@ export const ExploreIndia: React.FC<ExploreIndiaProps> = ({ onSelectExperience }
             <div className="flex flex-col gap-5 sm:gap-6">
               {/* Card 4: Luxury Beach Resorts & Heritage (Wide Landscape Card) */}
               {expHeritage && (
-                <ExperienceCard 
-                  experience={expHeritage} 
-                  className="h-[230px] sm:h-[250px]"
+                <ExperienceCard
+                  experience={expHeritage}
+                  className="h-57.5 sm:h-62.5"
                   onSelect={onSelectExperience}
                 />
               )}
 
               {/* Card 5: Active Outdoor & Wildlife (Large Feature Card) */}
               {expWildlife && (
-                <ExperienceCard 
-                  experience={expWildlife} 
-                  className="h-[400px] sm:h-[460px] lg:h-[490px]"
+                <ExperienceCard
+                  experience={expWildlife}
+                  className="h-100 sm:h-115 lg:h-122.5"
                   onSelect={onSelectExperience}
                 />
               )}
@@ -237,9 +235,9 @@ export const ExploreIndia: React.FC<ExploreIndiaProps> = ({ onSelectExperience }
 
           {/* Card 6: Culture, Festivals & Culinary Trails (Panoramic Full-Width Card) */}
           {expCulture && (
-            <ExperienceCard 
-              experience={expCulture} 
-              className="h-[260px] sm:h-[300px] w-full"
+            <ExperienceCard
+              experience={expCulture}
+              className="h-65 sm:h-75 w-full"
               onSelect={onSelectExperience}
             />
           )}

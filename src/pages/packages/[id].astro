@@ -1,0 +1,347 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Header } from "../../components/Header";
+import { Footer } from "../../components/Footer";
+import { EnquirySection } from "../../components/EnquirySection";
+import ItineraryTimeline from "../../components/ItineraryTimeline.astro";
+import { tripsData, type TripPackage } from "../../data/tripsData";
+import { TRAVEL_PACKAGES, convertTravelPackageToTrip } from "../../data/packages";
+import { 
+  Compass, 
+  Clock, 
+  MapPin, 
+  Star, 
+  Check, 
+  X, 
+  ArrowRight, 
+  Calendar,
+  Sparkles,
+  Users,
+  Award
+} from "lucide-react";
+
+export async function getStaticPaths() {
+  const pathsMap = new Map<string, TripPackage>();
+
+  // 1. Add all trips from tripsData (both by id and by slug)
+  for (const trip of tripsData) {
+    pathsMap.set(trip.id, trip);
+    pathsMap.set(trip.slug, trip);
+  }
+
+  // 2. Add all packages from TRAVEL_PACKAGES, converted so they display authentic package details
+  for (const pkg of TRAVEL_PACKAGES) {
+    if (!pathsMap.has(pkg.id)) {
+      pathsMap.set(pkg.id, convertTravelPackageToTrip(pkg));
+    }
+  }
+
+  return Array.from(pathsMap.entries()).map(([id, trip]) => ({
+    params: { id },
+    props: { trip }
+  }));
+}
+
+interface Props {
+  trip: TripPackage;
+}
+
+const { trip } = Astro.props;
+
+// Combine all distinct packages to offer comprehensive recommendations
+const allAvailableTrips = [
+  ...tripsData,
+  ...TRAVEL_PACKAGES.map(convertTravelPackageToTrip)
+];
+
+// Pick other trips to discover (excluding current trip by id or slug)
+const otherTrips = allAvailableTrips
+  .filter(t => t.id !== trip.id && t.slug !== trip.slug)
+  .slice(0, 3);
+---
+
+<Layout 
+  title={`${trip.title} — Day-by-Day Luxury Itinerary | GWS World Travel`}
+  description={trip.description}
+>
+  <!-- Global Navigation Header -->
+  <Header client:load />
+
+  <main class="min-h-screen bg-[#F8F5EF] text-[#242923] pt-20 sm:pt-24">
+    
+    <!-- Hero Banner Section -->
+    <section class="relative min-h-[65vh] lg:min-h-[75vh] flex items-end overflow-hidden pb-12 sm:pb-20">
+      <!-- Background Image with Parallax Vibe -->
+      <img 
+        src={trip.image} 
+        alt={trip.title}
+        class="absolute inset-0 w-full h-full object-cover object-center transform scale-105"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <!-- Dramatic Dark Overlay Gradient -->
+      <div class="absolute inset-0 bg-linear-to-t from-[#0F2821] via-[#0F2821]/60 to-black/35"></div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs text-white/70 uppercase tracking-widest mb-4 sm:mb-6">
+          <a href="/" class="hover:text-[#D8B878] transition-colors">Home</a>
+          <span>/</span>
+          <a href="/itinerary" class="hover:text-[#D8B878] transition-colors">Itineraries</a>
+          <span>/</span>
+          <span class="text-[#D8B878] font-bold truncate max-w-50 sm:max-w-none">{trip.title}</span>
+        </nav>
+
+        <div class="max-w-3xl space-y-4">
+          <!-- Meta Tags Row -->
+          <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+            <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold tracking-widest uppercase bg-[#C66B45] text-white shadow-md">
+              <Compass className="w-3.5 h-3.5" />
+              {trip.location}
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold tracking-widest uppercase bg-white/20 backdrop-blur-md text-white border border-white/20">
+              <Clock className="w-3.5 h-3.5 text-[#D8B878]" />
+              {trip.duration} ({trip.itinerary?.length || 0} Stages)
+            </span>
+            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-black/40 backdrop-blur-md text-[#D8B878] border border-[#D8B878]/30">
+              <Star className="w-3.5 h-3.5 fill-[#D8B878] text-[#D8B878]" />
+              {trip.rating} ({trip.reviewsCount} reviews)
+            </span>
+          </div>
+
+          <!-- Main Title -->
+          <h1 class="font-serif text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#F8F5EF] leading-[1.1] tracking-tight">
+            {trip.title}
+          </h1>
+
+          <p class="text-sm sm:text-lg text-white/90 font-light leading-relaxed max-w-2xl">
+            {trip.subtitle}
+          </p>
+
+          <!-- CTA Bar -->
+          <div class="pt-4 flex flex-wrap items-center gap-4 sm:gap-6">
+            <div>
+              <span class="text-xs uppercase tracking-widest text-[#D8B878] font-medium block">All-Inclusive Luxury</span>
+              <span class="text-xl sm:text-2xl font-bold text-white">Custom Curated <span class="text-xs font-light text-white/70">/ on enquiry</span></span>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <a 
+                href="#enquiry" 
+                class="px-6 py-3.5 rounded-full bg-[#C66B45] hover:bg-[#A95532] text-white font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center gap-2"
+                aria-label={`Reserve Expedition for ${trip.title}`}
+              >
+                <span>Reserve Expedition</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+
+              <a 
+                href="#itinerary-section" 
+                class="px-6 py-3.5 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md text-white font-bold text-xs uppercase tracking-wider border border-white/20 transition-all duration-300"
+              >
+                View Daily Route
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Trip Specs & Highlights Bar -->
+    <section class="py-12 bg-white border-y border-[#DDE5D8]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- 4-Stat Metric Strip -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 pb-10 border-b border-[#DDE5D8]/70">
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-2xl bg-[#173D32]/10 flex items-center justify-center text-[#173D32]">
+              <Calendar className="w-5 h-5" />
+            </div>
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-[#535B51] block">Total Duration</span>
+              <span class="text-sm sm:text-base font-extrabold text-[#173D32]">{trip.duration}</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-2xl bg-[#C66B45]/10 flex items-center justify-center text-[#C66B45]">
+              <MapPin className="w-5 h-5" />
+            </div>
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-[#535B51] block">Region & Isles</span>
+              <span class="text-sm sm:text-base font-extrabold text-[#173D32]">{trip.location}</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-2xl bg-[#D8B878]/20 flex items-center justify-center text-[#173D32]">
+              <Users className="w-5 h-5" />
+            </div>
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-[#535B51] block">Expedition Style</span>
+              <span class="text-sm sm:text-base font-extrabold text-[#173D32]">Private & Curated</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-2xl bg-sky-100 flex items-center justify-center text-sky-700">
+              <Award className="w-5 h-5" />
+            </div>
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-[#535B51] block">Excellence Rating</span>
+              <span class="text-sm sm:text-base font-extrabold text-[#173D32]">5-Star Luxury</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Curated Highlights List -->
+        <div class="pt-10">
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-[#173D32] mb-6 flex items-center gap-2">
+            <Sparkles className="w-6 h-6 text-[#D8B878]" />
+            <span>Signature Expedition Highlights</span>
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {(trip.highlights || []).map((highlight) => (
+              <div class="p-4 rounded-2xl bg-[#F8F5EF] border border-[#DDE5D8] flex items-start gap-3 hover:border-[#D8B878] transition-colors">
+                <div class="w-5 h-5 rounded-full bg-[#173D32] text-[#D8B878] flex items-center justify-center shrink-0 mt-0.5">
+                  <Check className="w-3.5 h-3.5" />
+                </div>
+                <p class="text-xs sm:text-sm text-[#242923] font-medium leading-relaxed">
+                  {highlight}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE INTERACTIVE ITINERARY TIMELINE -->
+    <!-- Mounts the animated road and car timeline component -->
+    <ItineraryTimeline itinerary={trip.itinerary || []} />
+
+    <!-- Inclusions & Exclusions Comparison -->
+    <section class="py-16 sm:py-24 bg-white border-t border-[#DDE5D8]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <span class="text-xs font-bold uppercase tracking-widest text-[#C66B45]">COMPLETE TRANSPARENCY</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-[#173D32] mt-1">What Is Included In Your Journey</h2>
+          <p class="text-xs sm:text-sm text-[#535B51] font-light mt-2">
+            Enjoy full peace of mind with all private transfers, luxury stays, dive gear, and island permits covered.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+          <!-- Inclusions Card -->
+          <div class="p-6 sm:p-8 rounded-3xl bg-[#F8F5EF] border border-[#DDE5D8] shadow-sm">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-[#DDE5D8]">
+              <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold">
+                <Check className="w-5 h-5" />
+              </div>
+              <h3 class="font-serif text-xl sm:text-2xl font-bold text-[#173D32]">Included in Package</h3>
+            </div>
+
+            <ul class="space-y-3.5">
+              {(trip.inclusions || []).map((inc) => (
+                <li class="flex items-start gap-3 text-xs sm:text-sm text-[#242923] leading-relaxed">
+                  <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <span>{inc}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Exclusions Card -->
+          <div class="p-6 sm:p-8 rounded-3xl bg-[#F8F5EF] border border-[#DDE5D8] shadow-sm">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-[#DDE5D8]">
+              <div class="w-8 h-8 rounded-full bg-rose-500 text-white flex items-center justify-center font-bold">
+                <X className="w-5 h-5" />
+              </div>
+              <h3 class="font-serif text-xl sm:text-2xl font-bold text-[#173D32]">Not Included</h3>
+            </div>
+
+            <ul class="space-y-3.5">
+              {(trip.exclusions || []).map((exc) => (
+                <li class="flex items-start gap-3 text-xs sm:text-sm text-[#535B51] leading-relaxed">
+                  <X className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+                  <span>{exc}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Other Expeditions to Discover -->
+    {otherTrips.length > 0 && (
+      <section class="py-16 sm:py-20 bg-[#F8F5EF] border-t border-[#DDE5D8]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between mb-8 sm:mb-12">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-widest text-[#C66B45]">EXPLORE ALTERNATIVES</span>
+              <h2 class="font-serif text-2xl sm:text-3xl font-bold text-[#173D32]">Other Signature Expeditions</h2>
+            </div>
+
+            <a 
+              href="/itinerary" 
+              class="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#C66B45] hover:text-[#A95532]"
+            >
+              <span>View All Itineraries</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {otherTrips.map((other) => (
+              <a 
+                href={`/packages/${other.slug}`}
+                class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-[#DDE5D8] flex flex-col"
+              >
+                <div class="relative h-48 overflow-hidden">
+                  <img 
+                    src={other.image} 
+                    alt={other.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-black/60 text-white backdrop-blur-xs">
+                    {other.duration}
+                  </span>
+                </div>
+
+                <div class="p-5 flex-1 flex flex-col justify-between">
+                  <div>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-[#C66B45] block mb-1">{other.location}</span>
+                    <h3 class="font-serif text-lg font-bold text-[#173D32] group-hover:text-[#C66B45] transition-colors leading-snug">
+                      {other.title}
+                    </h3>
+                  </div>
+
+                  <div class="pt-4 mt-3 border-t border-[#DDE5D8] flex items-center justify-between text-xs font-semibold">
+                    <span class="text-[#173D32]">{other.duration}</span>
+                    <span class="text-[#C66B45] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                      Explore Route &rarr;
+                    </span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Dedicated Booking & Enquiry Section -->
+    <div id="enquiry">
+      <EnquirySection 
+        prefilledPackage={trip.title}
+        client:load 
+      />
+    </div>
+
+  </main>
+
+  <!-- Global Footer -->
+  <Footer client:load />
+</Layout>

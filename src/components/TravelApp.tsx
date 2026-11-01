@@ -23,6 +23,7 @@ export const TravelApp: React.FC = () => {
   // Handle attraction selection (opens rich modal)
   const handleSelectAttraction = (attraction: Attraction) => {
     setModalData({
+      id: attraction.id,
       type: 'attraction',
       title: attraction.name,
       subtitle: attraction.tagline,
@@ -39,6 +40,7 @@ export const TravelApp: React.FC = () => {
   // Handle package selection (opens modal with itinerary)
   const handleSelectPackage = (pkg: TravelPackage) => {
     setModalData({
+      id: pkg.id,
       type: 'package',
       title: pkg.title,
       subtitle: pkg.tagline,
@@ -56,6 +58,7 @@ export const TravelApp: React.FC = () => {
   // Handle state preview selection (opens modal with top sights)
   const handleSelectState = (stateData: StateData) => {
     setModalData({
+      id: stateData.id,
       type: 'state',
       title: stateData.name,
       subtitle: stateData.tagline,
@@ -72,6 +75,7 @@ export const TravelApp: React.FC = () => {
   // Handle experience card selection
   const handleSelectExperience = (exp: Experience) => {
     setModalData({
+      id: exp.id,
       type: 'package',
       title: exp.title,
       subtitle: exp.subtitle,

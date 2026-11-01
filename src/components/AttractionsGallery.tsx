@@ -28,16 +28,16 @@ export const AttractionsGallery: React.FC<AttractionsGalleryProps> = ({ onSelect
   };
 
   return (
-    <section 
+    <section
       id="attractions"
       className="py-24 sm:py-32 bg-[#173D32] text-white relative overflow-hidden"
     >
       {/* Decorative background radial effects */}
-      <div className="absolute top-0 right-1/4 w-[600px] h-[600px] rounded-full bg-[#C66B45]/10 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-10 w-[500px] h-[500px] rounded-full bg-[#D8B878]/10 blur-[100px] pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-150 h-150 rounded-full bg-[#C66B45]/10 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-10 w-125 h-125 rounded-full bg-[#D8B878]/10 blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16">
-        
+
         {/* Header with Navigation Controls */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-2xl">
@@ -78,7 +78,7 @@ export const AttractionsGallery: React.FC<AttractionsGalleryProps> = ({ onSelect
       </div>
 
       {/* Horizontal Scrolling Gallery Strip */}
-      <div 
+      <div
         ref={scrollContainerRef}
         className="flex gap-6 overflow-x-auto pb-8 pt-2 px-4 sm:px-6 lg:px-8 max-w-full no-scrollbar scroll-smooth snap-x snap-mandatory"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -89,16 +89,15 @@ export const AttractionsGallery: React.FC<AttractionsGalleryProps> = ({ onSelect
           return (
             <div
               key={attraction.id}
-              className="w-[310px] sm:w-[360px] h-[520px] flex-shrink-0 snap-center perspective-1000 group cursor-pointer"
+              className="w-77.5 sm:w-90 h-130 shrink-0 snap-center perspective-1000 group cursor-pointer"
               onMouseEnter={() => setFlippedCardId(attraction.id)}
               onMouseLeave={() => setFlippedCardId(null)}
               onClick={(e) => toggleFlip(attraction.id, e)}
             >
               {/* Inner 3D Flipping Card Container */}
-              <div 
-                className={`relative w-full h-full duration-700 transform-style-3d transition-transform rounded-2xl shadow-2xl ${
-                  isFlipped ? 'rotate-y-180' : ''
-                }`}
+              <div
+                className={`relative w-full h-full duration-700 transform-style-3d transition-transform rounded-2xl shadow-2xl ${isFlipped ? 'rotate-y-180' : ''
+                  }`}
               >
                 {/* FRONT FACE */}
                 <div className="absolute inset-0 w-full h-full rounded-2xl overflow-hidden backface-hidden border border-white/15 bg-[#0F2821]">
@@ -109,7 +108,7 @@ export const AttractionsGallery: React.FC<AttractionsGalleryProps> = ({ onSelect
                   />
 
                   {/* Gradient overlays */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0F2821] via-[#0F2821]/30 to-black/40" />
+                  <div className="absolute inset-0 bg-linear-to-t from-[#0F2821] via-[#0F2821]/30 to-black/40" />
 
                   {/* Top badges */}
                   <div className="absolute top-5 left-5 right-5 flex items-center justify-between z-10">
@@ -144,8 +143,8 @@ export const AttractionsGallery: React.FC<AttractionsGalleryProps> = ({ onSelect
                 </div>
 
                 {/* BACK FACE (Flipped 180 degrees in 3D) */}
-                <div className="absolute inset-0 w-full h-full rounded-2xl p-6 sm:p-7 backface-hidden rotate-y-180 bg-gradient-to-br from-[#0F2821] via-[#173D32] to-[#245244] border-2 border-[#D8B878]/50 flex flex-col justify-between shadow-2xl">
-                  
+                <div className="absolute inset-0 w-full h-full rounded-2xl p-6 sm:p-7 backface-hidden rotate-y-180 bg-linear-to-br from-[#0F2821] via-[#173D32] to-[#245244] border-2 border-[#D8B878]/50 flex flex-col justify-between shadow-2xl">
+
                   <div>
                     {/* Header in Back */}
                     <div className="flex items-center justify-between pb-3 border-b border-white/15">
@@ -160,7 +159,7 @@ export const AttractionsGallery: React.FC<AttractionsGalleryProps> = ({ onSelect
                     <h3 className="font-serif text-2xl font-bold text-[#F8F5EF] mt-3">
                       {attraction.name}
                     </h3>
-                    
+
                     <p className="text-xs text-[#D8B878] italic font-serif mt-0.5">
                       {attraction.tagline}
                     </p>

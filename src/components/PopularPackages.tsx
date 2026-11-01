@@ -7,9 +7,9 @@ interface PopularPackagesProps {
   onEnquireForPackage: (pkgTitle: string) => void;
 }
 
-export const PopularPackages: React.FC<PopularPackagesProps> = ({ 
-  onSelectPackage, 
-  onEnquireForPackage 
+export const PopularPackages: React.FC<PopularPackagesProps> = ({
+  onSelectPackage,
+  onEnquireForPackage
 }) => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
 
@@ -31,7 +31,7 @@ export const PopularPackages: React.FC<PopularPackagesProps> = ({
   });
 
   return (
-    <section 
+    <section
       id="packages"
       className="py-24 sm:py-32 bg-[#F8F5EF] relative overflow-hidden"
     >
@@ -40,7 +40,7 @@ export const PopularPackages: React.FC<PopularPackagesProps> = ({
       <div className="absolute bottom-10 right-0 w-96 h-96 rounded-full bg-[#D8B878]/15 blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.25em] uppercase text-[#C66B45] mb-3">
@@ -53,7 +53,7 @@ export const PopularPackages: React.FC<PopularPackagesProps> = ({
           </h2>
 
           <p className="mt-4 text-base sm:text-lg text-[#535B51] font-light leading-relaxed">
-            Thoughtfully curated experiences for every kind of traveler, 
+            Thoughtfully curated experiences for every kind of traveler,
             blending private luxury, heritage stays, and unforgettable local hosts.
           </p>
         </div>
@@ -66,11 +66,10 @@ export const PopularPackages: React.FC<PopularPackagesProps> = ({
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 ${
-                  isActive
+                className={`px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 ${isActive
                     ? 'bg-[#173D32] text-[#D8B878] shadow-md border border-[#D8B878]/50 scale-105'
                     : 'bg-white text-[#242923] hover:bg-[#EEF3EB] border border-[#DDE5D8]'
-                }`}
+                  }`}
               >
                 {cat.label}
               </button>
@@ -93,7 +92,7 @@ export const PopularPackages: React.FC<PopularPackagesProps> = ({
                     alt={pkg.title}
                     className="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
 
                   {/* Badges on Image */}
                   <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
@@ -139,7 +138,7 @@ export const PopularPackages: React.FC<PopularPackagesProps> = ({
                     </span>
                     {pkg.inclusions.slice(0, 2).map((item, idx) => (
                       <div key={idx} className="flex items-start gap-2 text-xs text-[#535B51]">
-                        <Check className="w-3.5 h-3.5 text-[#C66B45] flex-shrink-0 mt-0.5" />
+                        <Check className="w-3.5 h-3.5 text-[#C66B45] shrink-0 mt-0.5" />
                         <span className="line-clamp-1">{item}</span>
                       </div>
                     ))}

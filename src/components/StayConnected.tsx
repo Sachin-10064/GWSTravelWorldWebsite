@@ -169,7 +169,7 @@ export const StayConnected: React.FC = () => {
               alt={item.title}
               className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-out"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3 text-white">
+            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3 text-white">
               <span className="text-[10px] uppercase font-bold tracking-widest text-[#D8B878]">
                 {item.location}
               </span>

@@ -1,0 +1,238 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
+import { EnquirySection } from "../components/EnquirySection";
+import ItineraryTimeline from "../components/ItineraryTimeline.astro";
+import { tripsData } from "../data/tripsData";
+import {
+  Compass,
+  Clock,
+  MapPin,
+  Star,
+  ArrowRight,
+  Sparkles,
+  Route,
+  ChevronRight,
+} from "lucide-react";
+
+// Featured default trip for the interactive timeline
+const featuredTrip = tripsData[0]; // The Emerald Paradise Escape (12 Days)
+---
+
+<Layout
+  title="Curated Expeditions & Day-by-Day Itineraries | GWS World Travel"
+  description="Explore our signature day-by-day expedition timelines. From 12-day Andaman island escapes to wild cave treks and luxury beach retreats."
+>
+  <Header client:load />
+
+  <main class="min-h-screen bg-[#F8F5EF] text-[#242923] pt-20 sm:pt-24">
+    <!-- Hero Section -->
+    <section
+      class="relative py-16 sm:py-24 bg-linear-to-b from-[#173D32] via-[#0F2821] to-[#0F2821] text-white overflow-hidden"
+    >
+      <div class="absolute inset-0 opacity-15 pointer-events-none">
+        <svg
+          class="w-full h-full"
+          viewBox="0 0 1000 1000"
+          preserveAspectRatio="none"
+          fill="none"
+          stroke="#D8B878"
+        >
+          <path
+            d="M-100,200 C300,100 400,600 1100,400 M-100,400 C300,300 400,800 1100,600 M-100,600 C300,500 400,900 1100,800"
+            stroke-width="1.5"
+            stroke-dasharray="6 6"></path>
+        </svg>
+      </div>
+
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center"
+      >
+        <div
+          class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.25em] uppercase text-[#D8B878] bg-white/10 px-4 py-1.5 rounded-full border border-[#D8B878]/30 mb-4 shadow-sm"
+        >
+          <Route className="w-3.5 h-3.5 text-[#D8B878]" />
+          <span>SIGNATURE DAY-BY-DAY TIMELINES</span>
+        </div>
+
+        <h1
+          class="font-serif text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#F8F5EF] leading-tight max-w-4xl mx-auto"
+        >
+          Every Day of Your Journey, <br class="hidden sm:inline" />
+          <span class="italic font-light text-[#D8B878]"
+            >Mapped to Perfection</span
+          >
+        </h1>
+
+        <p
+          class="mt-4 text-base sm:text-lg text-white/80 font-light max-w-2xl mx-auto leading-relaxed"
+        >
+          Preview your complete expedition before you depart. Experience private
+          speed catamaran crossings, certified coral diving, sunrise treks, and
+          starlit beach banquets.
+        </p>
+
+        <!-- Quick Jump to Featured Package Timeline -->
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href="#itinerary-section"
+            class="px-6 py-3 rounded-full bg-[#C66B45] hover:bg-[#A95532] text-white font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-lg flex items-center gap-2"
+          >
+            <span>Explore Featured 12-Day Route</span>
+            <ArrowRight className="w-4 h-4" />
+          </a>
+
+          <a
+            href="#all-packages"
+            class="px-6 py-3 rounded-full bg-white/15 hover:bg-white/25 text-white font-bold text-xs uppercase tracking-wider border border-white/20 transition-all duration-300"
+          >
+            Browse All 6 Expeditions
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- All Available Package Cards Strip -->
+    <section
+      id="all-packages"
+      class="py-16 sm:py-20 bg-white border-b border-[#DDE5D8]"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between mb-10">
+          <div>
+            <span
+              class="text-xs font-bold uppercase tracking-widest text-[#C66B45]"
+              >SELECT YOUR JOURNEY</span
+            >
+            <h2
+              class="font-serif text-2xl sm:text-4xl font-bold text-[#173D32]"
+            >
+              Choose an Expedition Itinerary
+            </h2>
+          </div>
+
+          <span class="text-xs text-[#535B51] font-light hidden sm:inline"
+            >6 Complete Day-by-Day Blueprints</span
+          >
+        </div>
+
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+        >
+          {
+            tripsData.map((trip) => (
+              <div class="group bg-[#F8F5EF] rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-[#DDE5D8] flex flex-col justify-between">
+                <div>
+                  <div class="relative h-56 overflow-hidden">
+                    <img
+                      src={trip.image}
+                      alt={trip.title}
+                      class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+                      loading="lazy"
+                    />
+                    <div class="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent" />
+
+                    <div class="absolute top-3 left-3 right-3 flex items-center justify-between">
+                      <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-[#173D32]/90 text-white backdrop-blur-xs">
+                        {trip.duration}
+                      </span>
+                      <span class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-black/60 text-[#D8B878] flex items-center gap-1 backdrop-blur-xs">
+                        <Star className="w-3 h-3 fill-[#D8B878]" />
+                        {trip.rating}
+                      </span>
+                    </div>
+
+                    <div class="absolute bottom-3 left-4 right-4">
+                      <span class="text-[10px] font-bold uppercase tracking-wider text-[#D8B878] block">
+                        {trip.location}
+                      </span>
+                      <h3 class="font-serif text-lg font-bold text-white leading-snug drop-shadow-sm">
+                        {trip.title}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div class="p-6 space-y-3">
+                    <p class="text-xs text-[#535B51] font-light leading-relaxed line-clamp-2">
+                      {trip.description}
+                    </p>
+
+                    <div class="space-y-1.5 pt-2">
+                      {trip.highlights.slice(0, 2).map((h) => (
+                        <div class="flex items-center gap-2 text-xs text-[#242923]">
+                          <span class="w-1.5 h-1.5 rounded-full bg-[#C66B45]" />
+                          <span class="truncate">{h}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="px-6 pb-6 pt-3 border-t border-[#DDE5D8] flex items-center justify-between">
+                  <div>
+                    <span class="text-[10px] uppercase text-[#535B51] block">
+                      Curated Tour
+                    </span>
+                    <span class="text-sm font-bold text-[#173D32]">
+                      {trip.duration}
+                    </span>
+                  </div>
+
+                  <a
+                    href={`/packages/${trip.slug}`}
+                    class="px-4 py-2 rounded-xl bg-ocean hover:bg-ocean-dark text-white text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center gap-1 group/btn"
+                  >
+                    <span>View Timeline</span>
+                    <ChevronRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
+                  </a>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Journey Header Banner -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
+      <div
+        class="p-6 sm:p-8 rounded-3xl bg-[#173D32] text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl border border-[#D8B878]/30"
+      >
+        <div>
+          <span
+            class="text-xs uppercase tracking-widest text-[#D8B878] font-bold block mb-1"
+          >
+            FEATURED ITINERARY PREVIEW
+          </span>
+          <h2 class="font-serif text-2xl sm:text-4xl font-bold text-[#F8F5EF]">
+            {featuredTrip.title}
+          </h2>
+          <p class="text-xs sm:text-sm text-white/80 font-light mt-1">
+            {featuredTrip.duration} • {featuredTrip.location}
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3 shrink-0">
+          <a
+            href={`/packages/${featuredTrip.slug}`}
+            class="px-5 py-2.5 rounded-full bg-[#C66B45] hover:bg-[#A95532] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md flex items-center gap-1.5"
+          >
+            <span>Book This Trip</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- The Interactive Animated Itinerary Timeline -->
+    <ItineraryTimeline itinerary={featuredTrip.itinerary} />
+
+    <!-- Enquiry Section -->
+    <div id="enquiry">
+      <EnquirySection prefilledPackage={featuredTrip.title} client:load />
+    </div>
+  </main>
+
+  <Footer client:load />
+</Layout>

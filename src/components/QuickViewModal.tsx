@@ -2,6 +2,7 @@ import React from 'react';
 import { X, Calendar, MapPin, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export interface ModalContent {
+  id?: string;
   type: 'package' | 'attraction' | 'state';
   title: string;
   subtitle?: string;
@@ -28,25 +29,25 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({ isOpen, onClose,
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 animate-fade-in">
       {/* Backdrop */}
-      <div 
+      <div
         className="absolute inset-0 bg-[#0F2821]/80 backdrop-blur-md transition-opacity"
         onClick={onClose}
       />
 
       {/* Modal Dialog */}
       <div className="relative w-full max-w-4xl max-h-[90vh] bg-[#F8F5EF] rounded-2xl overflow-hidden shadow-2xl z-10 flex flex-col border border-[#D8B878]/30">
-        
+
         {/* Header Image Bar */}
-        <div className="relative h-64 sm:h-80 w-full overflow-hidden flex-shrink-0">
-          <img 
-            src={data.image} 
+        <div className="relative h-64 sm:h-80 w-full overflow-hidden shrink-0">
+          <img
+            src={data.image}
             alt={data.title}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#173D32] via-[#173D32]/40 to-transparent" />
-          
+          <div className="absolute inset-0 bg-linear-to-t from-[#173D32] via-[#173D32]/40 to-transparent" />
+
           {/* Close Button */}
-          <button 
+          <button
             onClick={onClose}
             className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/40 hover:bg-[#C66B45] text-white flex items-center justify-center transition-colors duration-200 backdrop-blur-sm"
             aria-label="Close modal"
@@ -87,7 +88,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({ isOpen, onClose,
 
         {/* Scrollable Body Content */}
         <div className="p-6 sm:p-8 overflow-y-auto space-y-6 text-[#242923]">
-          
+
           <div>
             <h3 className="text-xs tracking-widest uppercase font-semibold text-[#C66B45] mb-2 flex items-center gap-2">
               <Sparkles className="w-4 h-4" />
@@ -118,7 +119,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({ isOpen, onClose,
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {data.highlights.map((item, idx) => (
                   <div key={idx} className="flex items-start gap-2.5 text-sm bg-white p-3 rounded-lg border border-[#DDE5D8]/80 shadow-xs">
-                    <CheckCircle2 className="w-4 h-4 text-[#C66B45] flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-[#C66B45] shrink-0 mt-0.5" />
                     <span className="text-[#242923] font-medium">{item}</span>
                   </div>
                 ))}
@@ -135,7 +136,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({ isOpen, onClose,
               <div className="space-y-3 border-l-2 border-[#D8B878]/50 ml-2 pl-4">
                 {data.itinerary.map((step, idx) => (
                   <div key={idx} className="relative">
-                    <div className="absolute -left-[23px] top-1 w-3 h-3 rounded-full bg-[#C66B45] border-2 border-[#F8F5EF]" />
+                    <div className="absolute -left-5.75 top-1 w-3 h-3 rounded-full bg-[#C66B45] border-2 border-[#F8F5EF]" />
                     <span className="text-xs font-bold text-[#C66B45] uppercase tracking-wider block">{step.day}: {step.title}</span>
                     <p className="text-sm text-[#535B51] mt-0.5">{step.desc}</p>
                   </div>
@@ -146,13 +147,24 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({ isOpen, onClose,
         </div>
 
         {/* Modal Footer with Actions */}
-        <div className="p-4 sm:p-6 bg-[#EEF3EB] border-t border-[#DDE5D8] flex flex-wrap items-center justify-between gap-4">
-          <button 
-            onClick={onClose}
-            className="px-5 py-2.5 text-sm font-medium text-[#535B51] hover:text-[#242923] transition-colors"
-          >
-            Back to Catalog
-          </button>
+        <div className="p-4 sm:p-6 bg-[#EEF3EB] border-t border-[#DDE5D8] flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onClose}
+              className="px-4 py-2 text-sm font-medium text-[#535B51] hover:text-[#242923] transition-colors"
+            >
+              Close
+            </button>
+            {data.id && (
+              <a
+                href={`/packages/${data.id}`}
+                className="px-3.5 py-1.5 text-xs font-semibold text-[#173D32] hover:text-white bg-white hover:bg-[#173D32] border border-[#173D32]/30 rounded-full transition-all shadow-xs inline-flex items-center gap-1.5"
+              >
+                <span>Interactive Timeline</span>
+                <ArrowRight className="w-3 h-3" />
+              </a>
+            )}
+          </div>
 
           <button
             onClick={() => {

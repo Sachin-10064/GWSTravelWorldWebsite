@@ -160,17 +160,17 @@ export const Footer: React.FC = () => {
             </span>
             <ul className="space-y-3 text-xs text-white/70 font-light">
               <li className="flex items-start gap-2.5">
-                <MapPin className="w-3.5 h-3.5 text-[#C66B45] flex-shrink-0 mt-0.5" />
+                <MapPin className="w-3.5 h-3.5 text-[#C66B45] shrink-0 mt-0.5" />
                 <span>
                   <strong>New Delhi:</strong> 14 Barakhamba Road, Connaught Place
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
-                <Phone className="w-3.5 h-3.5 text-[#C66B45] flex-shrink-0 mt-0.5" />
+                <Phone className="w-3.5 h-3.5 text-[#C66B45] shrink-0 mt-0.5" />
                 <span>+91 (011) 4820-9900</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <Mail className="w-3.5 h-3.5 text-[#C66B45] flex-shrink-0 mt-0.5" />
+                <Mail className="w-3.5 h-3.5 text-[#C66B45] shrink-0 mt-0.5" />
                 <span>concierge@atulyajourneys.in</span>
               </li>
             </ul>
